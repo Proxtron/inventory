@@ -1,0 +1,37 @@
+{
+  "name": "inventory",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx --watch --env-file=.env src/app.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Proxtron/inventory.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Proxtron/inventory/issues"
+  },
+  "homepage": "https://github.com/Proxtron/inventory#readme",
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/express": "^5.0.6",
+    "@types/express-validator": "^2.20.33",
+    "@types/node": "^25.2.3",
+    "@types/pg": "^8.16.0",
+    "dotenv": "^17.2.4",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "ejs": "^4.0.1",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.1",
+    "pg": "^8.18.0",
+    "tsx": "^4.21.0"
+  }
+}
