@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Inventory</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Vehicle Inventory</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Type</th>
+                <th>Color</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(const vehicle of vehicles) { %>
+                <tr>
+                    <td><%= vehicle.year %></td>
+                    <td><%= vehicle.make_name %></td>
+                    <td><%= vehicle.model_name %></td>
+                    <td><%= vehicle.vehicle_type_name %></td>
+                    <td><%= vehicle.color %></td>
+                    <td><%= vehicle.price %></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>
