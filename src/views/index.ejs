@@ -7,30 +7,36 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+    <%- include("navbar") %>
+    
     <h1>Vehicle Inventory</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Year</th>
-                <th>Make</th>
-                <th>Model</th>
-                <th>Type</th>
-                <th>Color</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% for(const vehicle of vehicles) { %>
+    <% if(vehicles.length === 0) { %>
+        <p>No vehicles in inventory.</p>
+    <% } else { %>
+        <table>
+            <thead>
                 <tr>
-                    <td><%= vehicle.year %></td>
-                    <td><%= vehicle.make_name %></td>
-                    <td><%= vehicle.model_name %></td>
-                    <td><%= vehicle.vehicle_type_name %></td>
-                    <td><%= vehicle.color %></td>
-                    <td><%= vehicle.price %></td>
+                    <th>Year</th>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Type</th>
+                    <th>Color</th>
+                    <th>Price</th>
                 </tr>
-            <% } %>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <% for(const vehicle of vehicles) { %>
+                    <tr onclick="window.location = '/vehicle/<%= vehicle.vehicle_id %>'">
+                        <td><%= vehicle.year %></td>
+                        <td><%= vehicle.make_name %></td>
+                        <td><%= vehicle.model_name %></td>
+                        <td><%= vehicle.vehicle_type_name %></td>
+                        <td><%= vehicle.color %></td>
+                        <td><%= vehicle.price %></td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    <% } %>
 </body>
 </html>

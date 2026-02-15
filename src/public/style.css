@@ -11,3 +11,10 @@ tbody tr:hover {
     background-color: #F0F0F0;
     cursor: pointer;
 }
+
+.nav-list {
+    list-style-type: none;
+    display:flex;
+    gap:2rem;
+    padding:0;
+}
