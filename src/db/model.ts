@@ -8,12 +8,13 @@ export const getAllModels = async () => {
             model.model_name,
             make.make_name,
             vehicle_type.vehicle_type_name,
-            COUNT(*) as vehicle_count
+            COUNT(vehicle.id) as vehicle_count
         FROM model
             INNER JOIN make ON make.id = model.make_id
             INNER JOIN vehicle_type ON vehicle_type.id = model.vehicle_type_id
+            LEFT JOIN vehicle ON vehicle.model_id = model.id
         GROUP BY model.id, model.model_name, make.make_name, vehicle_type.vehicle_type_name
-        ORDER BY COUNT(*) DESC
+        ORDER BY COUNT(vehicle.id) DESC
     `)
 
     return rows;

@@ -1,3 +1,15 @@
+-- Clear existing data (in reverse dependency order)
+DELETE FROM vehicle;
+DELETE FROM model;
+DELETE FROM make;
+DELETE FROM vehicle_type;
+
+-- Reset sequences
+ALTER SEQUENCE vehicle_type_id_seq RESTART WITH 1;
+ALTER SEQUENCE make_id_seq RESTART WITH 1;
+ALTER SEQUENCE model_id_seq RESTART WITH 1;
+ALTER SEQUENCE vehicle_id_seq RESTART WITH 1;
+
 -- Vehicle Types
 INSERT INTO vehicle_type (vehicle_type_name) VALUES
     ('Sedan'),
@@ -5,7 +17,9 @@ INSERT INTO vehicle_type (vehicle_type_name) VALUES
     ('Truck'),
     ('Coupe'),
     ('Hatchback'),
-    ('Van');
+    ('Van'),
+    ('Convertible'),
+    ('Wagon');
 
 -- Makes
 INSERT INTO make (make_name) VALUES
@@ -16,45 +30,201 @@ INSERT INTO make (make_name) VALUES
     ('BMW'),
     ('Tesla'),
     ('Jeep'),
-    ('Subaru');
+    ('Subaru'),
+    ('Mercedes-Benz'),
+    ('Audi'),
+    ('Nissan'),
+    ('Mazda'),
+    ('Hyundai'),
+    ('Kia'),
+    ('Volkswagen'),
+    ('Dodge'),
+    ('Ram'),
+    ('GMC'),
+    ('Porsche'),
+    ('Lexus');
 
--- Models (model_name, vehicle_type_id, make_id)
+-- Models
 INSERT INTO model (model_name, vehicle_type_id, make_id) VALUES
-    ('Camry',     1, 1),  -- Toyota Sedan
-    ('RAV4',      2, 1),  -- Toyota SUV
-    ('F-150',     3, 2),  -- Ford Truck
-    ('Mustang',   4, 2),  -- Ford Coupe
-    ('Civic',     1, 3),  -- Honda Sedan
-    ('CR-V',      2, 3),  -- Honda SUV
-    ('Tahoe',     2, 4),  -- Chevrolet SUV
-    ('Silverado', 3, 4),  -- Chevrolet Truck
-    ('X5',        2, 5),  -- BMW SUV
-    ('3 Series',  1, 5),  -- BMW Sedan
-    ('Model 3',   1, 6),  -- Tesla Sedan
-    ('Model Y',   2, 6),  -- Tesla SUV
-    ('Wrangler',  2, 7),  -- Jeep SUV
-    ('Outback',   2, 8),  -- Subaru SUV
-    ('Impreza',   5, 8);  -- Subaru Hatchback
+    -- Toyota
+    ('Camry', 1, 1), ('RAV4', 2, 1), ('Highlander', 2, 1), ('Corolla', 1, 1), ('Tacoma', 3, 1), ('4Runner', 2, 1), ('Prius', 5, 1),
+    -- Ford
+    ('F-150', 3, 2), ('Mustang', 4, 2), ('Explorer', 2, 2), ('Escape', 2, 2), ('Bronco', 2, 2), ('Ranger', 3, 2), ('Edge', 2, 2),
+    -- Honda
+    ('Civic', 1, 3), ('Accord', 1, 3), ('CR-V', 2, 3), ('Pilot', 2, 3), ('HR-V', 2, 3), ('Odyssey', 6, 3),
+    -- Chevrolet
+    ('Silverado', 3, 4), ('Tahoe', 2, 4), ('Equinox', 2, 4), ('Blazer', 2, 4), ('Malibu', 1, 4), ('Corvette', 4, 4), ('Traverse', 2, 4),
+    -- BMW
+    ('3 Series', 1, 5), ('5 Series', 1, 5), ('X3', 2, 5), ('X5', 2, 5), ('X7', 2, 5), ('M4', 4, 5),
+    -- Tesla
+    ('Model 3', 1, 6), ('Model Y', 2, 6), ('Model S', 1, 6), ('Model X', 2, 6),
+    -- Jeep
+    ('Wrangler', 2, 7), ('Grand Cherokee', 2, 7), ('Cherokee', 2, 7), ('Gladiator', 3, 7),
+    -- Subaru
+    ('Outback', 8, 8), ('Forester', 2, 8), ('Crosstrek', 2, 8), ('Impreza', 5, 8), ('WRX', 1, 8),
+    -- Mercedes-Benz
+    ('C-Class', 1, 9), ('E-Class', 1, 9), ('GLE', 2, 9), ('GLC', 2, 9), ('S-Class', 1, 9),
+    -- Audi
+    ('A4', 1, 10), ('A6', 1, 10), ('Q5', 2, 10), ('Q7', 2, 10), ('e-tron', 2, 10),
+    -- Nissan
+    ('Altima', 1, 11), ('Rogue', 2, 11), ('Pathfinder', 2, 11), ('Frontier', 3, 11), ('Sentra', 1, 11),
+    -- Mazda
+    ('Mazda3', 5, 12), ('CX-5', 2, 12), ('CX-9', 2, 12), ('Mazda6', 1, 12), ('MX-5 Miata', 7, 12),
+    -- Hyundai
+    ('Elantra', 1, 13), ('Sonata', 1, 13), ('Tucson', 2, 13), ('Santa Fe', 2, 13), ('Palisade', 2, 13),
+    -- Kia
+    ('Forte', 1, 14), ('Optima', 1, 14), ('Sorento', 2, 14), ('Telluride', 2, 14), ('Sportage', 2, 14),
+    -- Volkswagen
+    ('Jetta', 1, 15), ('Passat', 1, 15), ('Tiguan', 2, 15), ('Atlas', 2, 15), ('Golf', 5, 15),
+    -- Dodge
+    ('Charger', 1, 16), ('Challenger', 4, 16), ('Durango', 2, 16),
+    -- Ram
+    ('1500', 3, 17), ('2500', 3, 17), ('3500', 3, 17),
+    -- GMC
+    ('Sierra', 3, 18), ('Yukon', 2, 18), ('Terrain', 2, 18), ('Acadia', 2, 18),
+    -- Porsche
+    ('911', 4, 19), ('Cayenne', 2, 19), ('Macan', 2, 19), ('Panamera', 1, 19),
+    -- Lexus
+    ('RX', 2, 20), ('ES', 1, 20), ('NX', 2, 20), ('IS', 1, 20), ('GX', 2, 20);
 
--- Vehicles (year, color, price, model_id)
+-- Vehicles (200+ entries)
 INSERT INTO vehicle (year, color, price, model_id) VALUES
-    (2024, 'Blue',    28500, 1),   -- Toyota Camry
-    (2023, 'White',   32000, 2),   -- Toyota RAV4
-    (2022, 'Black',   45000, 3),   -- Ford F-150
-    (2024, 'Red',     42000, 4),   -- Ford Mustang
-    (2023, 'Silver',  24200, 5),   -- Honda Civic
-    (2024, 'Gray',    34500, 6),   -- Honda CR-V
-    (2021, 'White',   52000, 7),   -- Chevrolet Tahoe
-    (2023, 'Black',   48000, 8),   -- Chevrolet Silverado
-    (2022, 'Blue',    58000, 9),   -- BMW X5
-    (2024, 'White',   46000, 10),  -- BMW 3 Series
-    (2024, 'Red',     39000, 11),  -- Tesla Model 3
-    (2023, 'Black',   52000, 12),  -- Tesla Model Y
-    (2022, 'Green',   38000, 13),  -- Jeep Wrangler
-    (2023, 'Blue',    33000, 14),  -- Subaru Outback
-    (2024, 'Orange',  24000, 15),  -- Subaru Impreza
-    (2020, 'Silver',  48750, 9),   -- BMW X5 (older)
-    (2021, 'White',   22000, 5),   -- Honda Civic (older)
-    (2024, 'Black',   55000, 3),   -- Ford F-150 (newer)
-    (2022, 'Gray',    30000, 1),   -- Toyota Camry (older)
-    (2023, 'Red',     35000, 13);  -- Jeep Wrangler
+    -- Toyota (Camry=1, RAV4=2, Highlander=3, Corolla=4, Tacoma=5, 4Runner=6, Prius=7)
+    (2024, 'Blue', 28500, 1), (2023, 'White', 26800, 1), (2022, 'Black', 24200, 1), (2021, 'Silver', 22500, 1), (2020, 'Red', 20800, 1),
+    (2024, 'Red', 32000, 2), (2023, 'Gray', 30500, 2), (2022, 'White', 28000, 2), (2024, 'Black', 33200, 2), (2021, 'Blue', 26500, 2),
+    (2024, 'Silver', 42000, 3), (2023, 'Blue', 39500, 3), (2022, 'White', 37000, 3), (2021, 'Black', 34500, 3),
+    (2024, 'White', 23500, 4), (2023, 'Red', 21800, 4), (2022, 'Gray', 20200, 4), (2021, 'Blue', 18500, 4), (2020, 'Black', 17000, 4),
+    (2024, 'Black', 38000, 5), (2023, 'Silver', 35500, 5), (2022, 'White', 32000, 5), (2021, 'Blue', 29500, 5),
+    (2024, 'Green', 45000, 6), (2023, 'Black', 42500, 6), (2022, 'Gray', 39000, 6), (2021, 'White', 36500, 6),
+    (2024, 'Blue', 29500, 7), (2023, 'White', 27000, 7), (2022, 'Silver', 24500, 7), (2021, 'Red', 22000, 7),
+    
+    -- Ford (F-150=8, Mustang=9, Explorer=10, Escape=11, Bronco=12, Ranger=13, Edge=14)
+    (2024, 'Black', 48000, 8), (2023, 'Blue', 45500, 8), (2022, 'White', 42000, 8), (2021, 'Gray', 38500, 8), (2024, 'Red', 52000, 8), (2020, 'Silver', 36000, 8),
+    (2024, 'Red', 42000, 9), (2023, 'Black', 38500, 9), (2022, 'Blue', 35000, 9), (2024, 'Yellow', 45000, 9), (2021, 'White', 32500, 9),
+    (2024, 'Silver', 44000, 10), (2023, 'Black', 41000, 10), (2022, 'White', 38500, 10), (2021, 'Gray', 35000, 10),
+    (2024, 'Blue', 31000, 11), (2023, 'White', 28500, 11), (2022, 'Red', 26000, 11), (2021, 'Black', 24000, 11),
+    (2024, 'Orange', 52000, 12), (2023, 'Green', 48500, 12), (2022, 'Black', 45000, 12), (2021, 'White', 42000, 12),
+    (2024, 'White', 36000, 13), (2023, 'Black', 33500, 13), (2022, 'Silver', 31000, 13),
+    (2024, 'Gray', 39000, 14), (2023, 'Blue', 36500, 14), (2022, 'White', 34000, 14),
+    
+    -- Honda (Civic=15, Accord=16, CR-V=17, Pilot=18, HR-V=19, Odyssey=20)
+    (2024, 'White', 24500, 15), (2023, 'Black', 22800, 15), (2022, 'Silver', 21000, 15), (2021, 'Red', 19500, 15), (2020, 'Blue', 18000, 15),
+    (2024, 'Black', 28000, 16), (2023, 'Gray', 26200, 16), (2022, 'White', 24500, 16), (2021, 'Silver', 22800, 16),
+    (2024, 'Blue', 33500, 17), (2023, 'White', 31200, 17), (2022, 'Black', 29000, 17), (2021, 'Red', 27000, 17), (2024, 'Silver', 34200, 17),
+    (2024, 'Silver', 41000, 18), (2023, 'Black', 38500, 18), (2022, 'White', 36000, 18), (2021, 'Blue', 33500, 18),
+    (2024, 'Red', 26500, 19), (2023, 'White', 24800, 19), (2022, 'Gray', 23000, 19), (2021, 'Black', 21500, 19),
+    (2024, 'White', 38000, 20), (2023, 'Silver', 35500, 20), (2022, 'Black', 33000, 20), (2021, 'Gray', 30500, 20),
+    
+    -- Chevrolet (Silverado=21, Tahoe=22, Equinox=23, Blazer=24, Malibu=25, Corvette=26, Traverse=27)
+    (2024, 'Black', 46000, 21), (2023, 'White', 43500, 21), (2022, 'Silver', 41000, 21), (2021, 'Blue', 38000, 21), (2024, 'Red', 49000, 21),
+    (2024, 'White', 54000, 22), (2023, 'Black', 51000, 22), (2022, 'Gray', 48000, 22), (2021, 'Silver', 45000, 22),
+    (2024, 'Gray', 29500, 23), (2023, 'White', 27500, 23), (2022, 'Black', 25500, 23), (2021, 'Red', 23500, 23),
+    (2024, 'Blue', 35000, 24), (2023, 'Black', 32500, 24), (2022, 'White', 30000, 24), (2021, 'Silver', 28000, 24),
+    (2024, 'Silver', 26500, 25), (2023, 'White', 24800, 25), (2022, 'Black', 23000, 25), (2021, 'Blue', 21500, 25),
+    (2024, 'Red', 68000, 26), (2023, 'Yellow', 65000, 26), (2022, 'Blue', 62000, 26), (2024, 'Black', 72000, 26),
+    (2024, 'White', 38500, 27), (2023, 'Black', 36000, 27), (2022, 'Silver', 33500, 27), (2021, 'Gray', 31000, 27),
+    
+    -- BMW (3 Series=28, 5 Series=29, X3=30, X5=31, X7=32, M4=33)
+    (2024, 'White', 46000, 28), (2023, 'Black', 43000, 28), (2022, 'Gray', 40000, 28), (2021, 'Blue', 37000, 28), (2020, 'Silver', 34000, 28),
+    (2024, 'Black', 58000, 29), (2023, 'White', 54500, 29), (2022, 'Silver', 51000, 29), (2021, 'Gray', 47500, 29),
+    (2024, 'Blue', 48000, 30), (2023, 'White', 45000, 30), (2022, 'Black', 42000, 30), (2021, 'Gray', 39000, 30),
+    (2024, 'Black', 62000, 31), (2023, 'White', 58000, 31), (2022, 'Silver', 54000, 31), (2021, 'Blue', 50000, 31), (2020, 'Gray', 46000, 31),
+    (2024, 'White', 78000, 32), (2023, 'Black', 73000, 32), (2022, 'Gray', 68000, 32),
+    (2024, 'Red', 76000, 33), (2023, 'White', 71000, 33), (2022, 'Black', 66000, 33),
+    
+    -- Tesla (Model 3=34, Model Y=35, Model S=36, Model X=37)
+    (2024, 'Red', 42000, 34), (2023, 'White', 39000, 34), (2022, 'Black', 36000, 34), (2021, 'Blue', 33000, 34), (2024, 'Gray', 43500, 34),
+    (2024, 'Black', 52000, 35), (2023, 'White', 48500, 35), (2022, 'Red', 45000, 35), (2021, 'Gray', 42000, 35), (2024, 'Blue', 54000, 35),
+    (2024, 'White', 78000, 36), (2023, 'Black', 73000, 36), (2022, 'Silver', 68000, 36), (2021, 'Red', 63000, 36),
+    (2024, 'Black', 95000, 37), (2023, 'White', 89000, 37), (2022, 'Gray', 83000, 37), (2021, 'Blue', 77000, 37),
+    
+    -- Jeep (Wrangler=38, Grand Cherokee=39, Cherokee=40, Gladiator=41)
+    (2024, 'Green', 42000, 38), (2023, 'Black', 39000, 38), (2022, 'White', 36000, 38), (2021, 'Red', 33000, 38), (2024, 'Yellow', 44000, 38),
+    (2024, 'Black', 46000, 39), (2023, 'White', 43000, 39), (2022, 'Silver', 40000, 39), (2021, 'Gray', 37000, 39),
+    (2024, 'White', 34000, 40), (2023, 'Black', 31500, 40), (2022, 'Blue', 29000, 40), (2021, 'Red', 27000, 40),
+    (2024, 'Orange', 48000, 41), (2023, 'Black', 45000, 41), (2022, 'White', 42000, 41), (2021, 'Silver', 39000, 41),
+    
+    -- Subaru (Outback=42, Forester=43, Crosstrek=44, Impreza=45, WRX=46)
+    (2024, 'Blue', 33000, 42), (2023, 'White', 31000, 42), (2022, 'Gray', 29000, 42), (2021, 'Black', 27000, 42), (2020, 'Silver', 25000, 42),
+    (2024, 'Green', 31000, 43), (2023, 'Black', 29000, 43), (2022, 'White', 27000, 43), (2021, 'Blue', 25000, 43),
+    (2024, 'Orange', 28000, 44), (2023, 'White', 26000, 44), (2022, 'Black', 24500, 44), (2021, 'Gray', 23000, 44),
+    (2024, 'Blue', 24000, 45), (2023, 'White', 22500, 45), (2022, 'Red', 21000, 45), (2021, 'Black', 19500, 45),
+    (2024, 'Blue', 32000, 46), (2023, 'Black', 30000, 46), (2022, 'White', 28000, 46), (2021, 'Red', 26000, 46),
+    
+    -- Mercedes-Benz (C-Class=47, E-Class=48, GLE=49, GLC=50, S-Class=51)
+    (2024, 'White', 48000, 47), (2023, 'Black', 45000, 47), (2022, 'Silver', 42000, 47), (2021, 'Gray', 39000, 47), (2020, 'Blue', 36000, 47),
+    (2024, 'Black', 62000, 48), (2023, 'White', 58000, 48), (2022, 'Silver', 54000, 48), (2021, 'Gray', 50000, 48),
+    (2024, 'Silver', 68000, 49), (2023, 'Black', 64000, 49), (2022, 'White', 60000, 49), (2021, 'Gray', 56000, 49),
+    (2024, 'White', 52000, 50), (2023, 'Black', 48500, 50), (2022, 'Silver', 45000, 50), (2021, 'Blue', 42000, 50),
+    (2024, 'Black', 115000, 51), (2023, 'White', 108000, 51), (2022, 'Silver', 101000, 51),
+    
+    -- Audi (A4=52, A6=53, Q5=54, Q7=55, e-tron=56)
+    (2024, 'Gray', 44000, 52), (2023, 'White', 41000, 52), (2022, 'Black', 38000, 52), (2021, 'Blue', 35000, 52), (2020, 'Silver', 32000, 52),
+    (2024, 'Black', 58000, 53), (2023, 'White', 54000, 53), (2022, 'Silver', 50000, 53), (2021, 'Gray', 46000, 53),
+    (2024, 'White', 49000, 54), (2023, 'Black', 46000, 54), (2022, 'Gray', 43000, 54), (2021, 'Blue', 40000, 54),
+    (2024, 'Black', 62000, 55), (2023, 'White', 58000, 55), (2022, 'Silver', 54000, 55), (2021, 'Gray', 50000, 55),
+    (2024, 'Blue', 71000, 56), (2023, 'White', 67000, 56), (2022, 'Black', 63000, 56),
+    
+    -- Nissan (Altima=57, Rogue=58, Pathfinder=59, Frontier=60, Sentra=61)
+    (2024, 'White', 27000, 57), (2023, 'Black', 25000, 57), (2022, 'Silver', 23000, 57), (2021, 'Gray', 21000, 57), (2020, 'Red', 19000, 57),
+    (2024, 'Black', 32000, 58), (2023, 'White', 29500, 58), (2022, 'Blue', 27000, 58), (2021, 'Silver', 25000, 58),
+    (2024, 'Silver', 38000, 59), (2023, 'Black', 35500, 59), (2022, 'White', 33000, 59), (2021, 'Gray', 30500, 59),
+    (2024, 'Blue', 34000, 60), (2023, 'White', 31500, 60), (2022, 'Black', 29000, 60), (2021, 'Silver', 27000, 60),
+    (2024, 'White', 21500, 61), (2023, 'Black', 20000, 61), (2022, 'Red', 18500, 61), (2021, 'Silver', 17000, 61),
+    
+    -- Mazda (Mazda3=62, CX-5=63, CX-9=64, Mazda6=65, MX-5 Miata=66)
+    (2024, 'Red', 25000, 62), (2023, 'White', 23500, 62), (2022, 'Black', 22000, 62), (2021, 'Gray', 20500, 62), (2020, 'Blue', 19000, 62),
+    (2024, 'Blue', 31000, 63), (2023, 'White', 29000, 63), (2022, 'Black', 27000, 63), (2021, 'Silver', 25000, 63),
+    (2024, 'White', 39000, 64), (2023, 'Black', 36500, 64), (2022, 'Gray', 34000, 64), (2021, 'Silver', 31500, 64),
+    (2024, 'Silver', 28000, 65), (2023, 'Black', 26000, 65), (2022, 'White', 24000, 65), (2021, 'Blue', 22500, 65),
+    (2024, 'Red', 32000, 66), (2023, 'White', 30000, 66), (2022, 'Black', 28000, 66), (2021, 'Blue', 26000, 66),
+    
+    -- Hyundai (Elantra=67, Sonata=68, Tucson=69, Santa Fe=70, Palisade=71)
+    (2024, 'White', 22000, 67), (2023, 'Black', 20500, 67), (2022, 'Silver', 19000, 67), (2021, 'Blue', 17500, 67), (2020, 'Red', 16000, 67),
+    (2024, 'Black', 27000, 68), (2023, 'White', 25000, 68), (2022, 'Silver', 23000, 68), (2021, 'Gray', 21000, 68),
+    (2024, 'Gray', 29000, 69), (2023, 'White', 27000, 69), (2022, 'Black', 25000, 69), (2021, 'Blue', 23000, 69),
+    (2024, 'Blue', 35000, 70), (2023, 'Black', 32500, 70), (2022, 'White', 30000, 70), (2021, 'Silver', 28000, 70),
+    (2024, 'White', 42000, 71), (2023, 'Black', 39000, 71), (2022, 'Silver', 36000, 71), (2021, 'Gray', 33500, 71),
+    
+    -- Kia (Forte=72, Optima=73, Sorento=74, Telluride=75, Sportage=76)
+    (2024, 'Red', 21000, 72), (2023, 'White', 19500, 72), (2022, 'Black', 18000, 72), (2021, 'Silver', 16500, 72), (2020, 'Blue', 15000, 72),
+    (2024, 'White', 26000, 73), (2023, 'Black', 24000, 73), (2022, 'Gray', 22000, 73), (2021, 'Silver', 20000, 73),
+    (2024, 'Black', 34000, 74), (2023, 'White', 31500, 74), (2022, 'Silver', 29000, 74), (2021, 'Blue', 27000, 74),
+    (2024, 'Green', 40000, 75), (2023, 'Black', 37000, 75), (2022, 'White', 34500, 75), (2021, 'Gray', 32000, 75),
+    (2024, 'Blue', 28000, 76), (2023, 'White', 26000, 76), (2022, 'Black', 24000, 76), (2021, 'Silver', 22000, 76),
+    
+    -- Volkswagen (Jetta=77, Passat=78, Tiguan=79, Atlas=80, Golf=81)
+    (2024, 'White', 22500, 77), (2023, 'Black', 21000, 77), (2022, 'Silver', 19500, 77), (2021, 'Gray', 18000, 77), (2020, 'Blue', 16500, 77),
+    (2024, 'Black', 26000, 78), (2023, 'White', 24000, 78), (2022, 'Silver', 22000, 78), (2021, 'Gray', 20000, 78),
+    (2024, 'Gray', 30000, 79), (2023, 'White', 28000, 79), (2022, 'Black', 26000, 79), (2021, 'Blue', 24000, 79),
+    (2024, 'Blue', 37000, 80), (2023, 'Black', 34500, 80), (2022, 'White', 32000, 80), (2021, 'Silver', 29500, 80),
+    (2024, 'Red', 25000, 81), (2023, 'White', 23000, 81), (2022, 'Black', 21000, 81), (2021, 'Gray', 19500, 81),
+    
+    -- Dodge (Charger=82, Challenger=83, Durango=84)
+    (2024, 'Black', 38000, 82), (2023, 'White', 35500, 82), (2022, 'Red', 33000, 82), (2021, 'Gray', 30500, 82), (2020, 'Blue', 28000, 82),
+    (2024, 'Red', 42000, 83), (2023, 'Black', 39000, 83), (2022, 'White', 36000, 83), (2021, 'Yellow', 33500, 83),
+    (2024, 'White', 44000, 84), (2023, 'Black', 41000, 84), (2022, 'Silver', 38000, 84), (2021, 'Gray', 35500, 84),
+    
+    -- Ram (1500=85, 2500=86, 3500=87)
+    (2024, 'Black', 52000, 85), (2023, 'White', 48500, 85), (2022, 'Silver', 45000, 85), (2021, 'Gray', 42000, 85), (2024, 'Blue', 54000, 85),
+    (2024, 'White', 62000, 86), (2023, 'Black', 58000, 86), (2022, 'Silver', 54000, 86), (2021, 'Gray', 50000, 86),
+    (2024, 'Black', 72000, 87), (2023, 'White', 67000, 87), (2022, 'Silver', 62000, 87),
+    
+    -- GMC (Sierra=88, Yukon=89, Terrain=90, Acadia=91)
+    (2024, 'White', 51000, 88), (2023, 'Black', 47500, 88), (2022, 'Silver', 44000, 88), (2021, 'Blue', 41000, 88), (2024, 'Red', 53000, 88),
+    (2024, 'Black', 56000, 89), (2023, 'White', 52500, 89), (2022, 'Gray', 49000, 89), (2021, 'Silver', 45500, 89),
+    (2024, 'Blue', 32000, 90), (2023, 'White', 29500, 90), (2022, 'Black', 27000, 90), (2021, 'Silver', 25000, 90),
+    (2024, 'White', 39000, 91), (2023, 'Black', 36500, 91), (2022, 'Silver', 34000, 91), (2021, 'Gray', 31500, 91),
+    
+    -- Porsche (911=92, Cayenne=93, Macan=94, Panamera=95)
+    (2024, 'Red', 125000, 92), (2023, 'White', 118000, 92), (2022, 'Black', 111000, 92), (2021, 'Silver', 104000, 92),
+    (2024, 'Black', 78000, 93), (2023, 'White', 73000, 93), (2022, 'Silver', 68000, 93), (2021, 'Gray', 63000, 93),
+    (2024, 'Blue', 62000, 94), (2023, 'White', 58000, 94), (2022, 'Black', 54000, 94), (2021, 'Silver', 50000, 94),
+    (2024, 'White', 98000, 95), (2023, 'Black', 92000, 95), (2022, 'Silver', 86000, 95),
+    
+    -- Lexus (RX=96, ES=97, NX=98, IS=99, GX=100)
+    (2024, 'White', 52000, 96), (2023, 'Black', 48500, 96), (2022, 'Silver', 45000, 96), (2021, 'Gray', 42000, 96), (2020, 'Blue', 39000, 96),
+    (2024, 'Black', 46000, 97), (2023, 'White', 43000, 97), (2022, 'Silver', 40000, 97), (2021, 'Gray', 37000, 97),
+    (2024, 'Gray', 44000, 98), (2023, 'White', 41000, 98), (2022, 'Black', 38000, 98), (2021, 'Blue', 35000, 98),
+    (2024, 'White', 43000, 99), (2023, 'Black', 40000, 99), (2022, 'Silver', 37000, 99), (2021, 'Red', 34000, 99),
+    (2024, 'Black', 60000, 100), (2023, 'White', 56000, 100), (2022, 'Silver', 52000, 100), (2021, 'Gray', 48000, 100);

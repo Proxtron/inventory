@@ -7,7 +7,7 @@ th, td {
     padding:.25rem 1rem;
 }
 
-tbody tr:hover {
+.clickable:hover {
     background-color: #F0F0F0;
     cursor: pointer;
 }
