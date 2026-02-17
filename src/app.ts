@@ -4,6 +4,7 @@ import vehicleRouter from "./routes/vehicleRoutes.js";
 import modelRouter from "./routes/modelRoutes.js";
 import indexRouter from "./routes/indexRoutes.js";
 import path from "node:path";
+import makeRouter from "./routes/makeRoutes.js";
 
 const app = express();
 
@@ -19,6 +20,7 @@ const PORT = process.env.PORT || 3000;
 app.use("/", indexRouter);
 app.use("/vehicle", vehicleRouter);
 app.use("/model", modelRouter);
+app.use("/make", makeRouter);
 
 app.listen(PORT, () => {
     console.log("Listening on port 3000")

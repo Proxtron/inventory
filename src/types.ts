@@ -7,3 +7,9 @@ export interface Vehicle {
     color: string,
     price: string
 }
+
+export interface Make {
+    id: number,
+    make_name: string,
+    vehicle_count: number
+}
