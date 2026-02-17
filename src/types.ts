@@ -13,3 +13,11 @@ export interface Make {
     make_name: string,
     vehicle_count: number
 }
+
+export interface Model {
+    id: number,
+    model_name: string,
+    make_name: string,
+    vehicle_type_name: string,
+    vehicle_count: number
+}
