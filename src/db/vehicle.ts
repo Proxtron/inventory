@@ -10,7 +10,9 @@ export const getAllVehicles = async () => {
             model.model_name,
             vehicle_type.vehicle_type_name,
             vehicle.color,
-            vehicle.price
+            vehicle.price,
+            vehicle_type.id AS vehicle_type_id,
+            make.id AS make_id
         FROM vehicle
             INNER JOIN model
                 ON vehicle.model_id = model.id
@@ -31,7 +33,9 @@ export const getVehicle = async (vehicleId: number) => {
             model.model_name,
             vehicle_type.vehicle_type_name,
             vehicle.color,
-            vehicle.price
+            vehicle.price,
+            vehicle_type.id AS vehicle_type_id,
+            make.id AS make_id
         FROM vehicle
             INNER JOIN model
                 ON vehicle.model_id = model.id
@@ -53,7 +57,9 @@ export const getAllVehiclesByMake = async (makeId: number) => {
             model.model_name,
             vehicle_type.vehicle_type_name,
             vehicle.color,
-            vehicle.price
+            vehicle.price,
+            vehicle_type.id AS vehicle_type_id,
+            make.id AS make_id
         FROM vehicle
             INNER JOIN model
                 ON vehicle.model_id = model.id
@@ -64,5 +70,30 @@ export const getAllVehiclesByMake = async (makeId: number) => {
         WHERE make.id = $1
     `, [makeId]);
     
+    return rows;
+}
+
+export const getAllVehiclesByType = async (typeId: number) => {
+    const { rows } = await pool.query<Vehicle>(`
+        SELECT
+            vehicle.id AS vehicle_id,
+            vehicle.year,
+            make.make_name,
+            model.model_name,
+            vehicle_type.vehicle_type_name,
+            vehicle.color,
+            vehicle.price,
+            vehicle_type.id AS vehicle_type_id,
+            make.id AS make_id
+        FROM vehicle
+            INNER JOIN model
+                ON vehicle.model_id = model.id
+            INNER JOIN vehicle_type
+                ON vehicle_type.id = model.vehicle_type_id
+            INNER JOIN make
+                ON model.make_id = make.id
+        WHERE vehicle_type.id = $1
+    `, [typeId]);
+
     return rows;
 }

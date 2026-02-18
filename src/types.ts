@@ -5,7 +5,9 @@ export interface Vehicle {
     model_name: string,
     vehicle_type_name: string,
     color: string,
-    price: string
+    price: string,
+    vehicle_type_id: number,
+    make_id: number
 }
 
 export interface Make {

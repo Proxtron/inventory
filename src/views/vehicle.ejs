@@ -3,27 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <% if (notFound) { %>
-        <title>Vehicle Not Found</title>
-    <% } else { %>
-        <title><%= vehicle.year %> <%= vehicle.make_name %>  <%= vehicle.model_name %></title>
-    <% } %>
+    <title><%= vehicle.year %> <%= vehicle.make_name %>  <%= vehicle.model_name %></title>
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <%- include("navbar") %>
-    
     <a href="/">Back to Inventory</a>
-    <% if (notFound) { %>
-        <h1>Vehicle Not Found</h1>
-    <% } else { %>
-        <h1><%= vehicle.year %> <%= vehicle.make_name %>  <%= vehicle.model_name %></h1>
-        <p><b>Type:</b> <%= vehicle.vehicle_type_name %></p>
-        <p><b>Color:</b> <%= vehicle.color %></p>
-        <p><b>Price:</b> <%= vehicle.price %></p>
-        <p><b>Year:</b> <%= vehicle.year %></p>
-        <p><b>Make:</b> <%= vehicle.make_name %></p>
-        <p><b>Model:</b> <%= vehicle.model_name %></p>
-    <% } %>
+
+    <h1><%= vehicle.year %> <%= vehicle.make_name %>  <%= vehicle.model_name %></h1>
+    <p><b>Type:</b> <a href="/vehicle/type/<%- vehicle.vehicle_type_id %>"><%= vehicle.vehicle_type_name %></a></p>
+    <p><b>Color:</b> <%= vehicle.color %></p>
+    <p><b>Price:</b> <%= vehicle.price %></p>
+    <p><b>Year:</b> <%= vehicle.year %></p>
+    <p><b>Make:</b> <a href="/make/<%- vehicle.make_id %>"><%= vehicle.make_name %></a></p>
+    <p><b>Model:</b> <%= vehicle.model_name %></p>
 </body>
 </html>
