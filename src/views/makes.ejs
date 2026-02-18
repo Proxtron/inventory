@@ -22,7 +22,7 @@
             </thead>
             <tbody>
                 <% for(const make of makes) { %>
-                    <tr>
+                    <tr class="clickable" onclick="window.location = '/make/<%= make.id %>'">
                         <td><%= make.make_name %></td>
                         <td><%= make.vehicle_count %></td>
                     </tr>
