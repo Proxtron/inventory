@@ -1,5 +1,5 @@
 import pool from "./pool.js";
-import type { Model } from "../types.js";
+import type { Model, ModelTypeCombo } from "../types.js";
 
 export const getAllModels = async () => {
     const { rows } = await pool.query<Model>(`
@@ -19,3 +19,20 @@ export const getAllModels = async () => {
 
     return rows;
 }
+
+export const getAllModelTypeCombos = async () => {
+    const { rows } = await pool.query<ModelTypeCombo>(`
+        SELECT
+            model.id AS model_id,
+            model.model_name,
+            vehicle_type.id AS vehicle_type_id,
+            vehicle_type.vehicle_type_name,
+            make.id AS make_id
+        FROM model
+            INNER JOIN vehicle_type ON vehicle_type.id = model.vehicle_type_id
+            INNER JOIN make ON model.make_id = make.id
+    `)
+
+    return rows;
+}
+

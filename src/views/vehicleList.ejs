@@ -14,7 +14,7 @@
         </thead>
         <tbody>
             <% for(const vehicle of vehicles) { %>
-                <tr class="clickable" onclick="window.location = '/vehicle/<%= vehicle.vehicle_id %>'">
+                <tr class="clickable" onclick="window.location = '/vehicle/detail/<%= vehicle.vehicle_id %>'">
                     <td><%= vehicle.year %></td>
                     <td><%= vehicle.make_name %></td>
                     <td><%= vehicle.model_name %></td>

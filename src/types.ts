@@ -23,3 +23,11 @@ export interface Model {
     vehicle_type_name: string,
     vehicle_count: number
 }
+
+export interface ModelTypeCombo {
+    model_name: string,
+    vehicle_type_name: string,
+    model_id: number,
+    vehicle_type_id: number,
+    make_id: number
+}

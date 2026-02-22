@@ -18,3 +18,7 @@ th, td {
     gap:2rem;
     padding:0;
 }
+
+.form-row {
+    margin-bottom: 1rem;
+}

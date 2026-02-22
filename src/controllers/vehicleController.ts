@@ -1,6 +1,8 @@
 import type { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { getVehicle, getAllVehiclesByType } from "../db/vehicle.js";
+import { getAllMakes } from "../db/make.js";
+import { getAllModelTypeCombos } from "../db/model.js";
 
 export const index = async (req: Request<{vehicle_id: string}>, res: Response) => {
     const result = validationResult(req);
@@ -34,4 +36,11 @@ export const vehiclesByType = async (req: Request<{type_id: string}>, res: Respo
     } else {
         return res.render("vehicleByType", {vehicles: queryResult, vehicleType});
     }
+}
+
+export const getCreateForm = async (req: Request, res: Response) => {
+    const allMakes = await getAllMakes();
+    const allModelTypeCombos = await getAllModelTypeCombos();
+    console.log(allModelTypeCombos);
+    return res.render("create/createVehicle", {allMakes, allModelTypeCombos});
 }
