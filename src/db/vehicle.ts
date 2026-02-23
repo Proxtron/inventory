@@ -1,5 +1,5 @@
 import pool from "./pool.js";
-import type { Vehicle } from "../types.js";
+import type { AddVehicleParams, Vehicle } from "../types.js";
 
 export const getAllVehicles = async () => {
     const { rows } = await pool.query<Vehicle>(`
@@ -96,4 +96,13 @@ export const getAllVehiclesByType = async (typeId: number) => {
     `, [typeId]);
 
     return rows;
+}
+
+export const addVehicle = async ({year, color, price, make, model}: AddVehicleParams) => {
+    const { rows } = await pool.query<{id: number}>(`
+        INSERT INTO vehicle (year, color, price, model_id)
+        VALUES ($1, $2, $3, $4)
+        RETURNING id
+    `, [year, color, price, model])
+    return rows[0];
 }

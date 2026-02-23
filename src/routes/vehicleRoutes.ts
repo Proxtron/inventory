@@ -1,6 +1,6 @@
 import { Router } from "express";
 import * as vehicleController from "../controllers/vehicleController.js"
-import { param } from "express-validator";
+import { param, body } from "express-validator";
 
 const vehicleRouter = Router();
 
@@ -14,5 +14,12 @@ vehicleRouter.get("/type/:type_id",
 )
 
 vehicleRouter.get("/new", vehicleController.getCreateForm)
+
+vehicleRouter.post("/new",
+    body(["year", "make", "model"]).isInt(),
+    body("price").isFloat(),
+    body("color").notEmpty(),
+    vehicleController.postCreateForm
+)
 
 export default vehicleRouter;

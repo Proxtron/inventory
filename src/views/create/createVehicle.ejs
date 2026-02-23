@@ -40,13 +40,6 @@
                 <option value="" disabled selected hidden>Choose a Model</option>
             </select>
         </div>
-        <div class="form-row">
-            <label for="vehicle-type">Vehicle Type:</label>
-            <select name="vehicle-type" id="vehicle-type" required disabled>
-                <option value="" disabled selected hidden>Choose a Type</option>
-            </select>
-        </div>
-
         <button>Add Vehicle</button>
     </form>
 </body>
@@ -59,9 +52,6 @@
         modelInput.disabled = false;
         modelInput.innerHTML = "<option value='' disabled selected hidden>Choose a Model</option>"
 
-        const vehicleTypeInput = document.getElementById("vehicle-type");
-        vehicleTypeInput.disabled = true;
-        vehicleTypeInput.innerHTML = "<option value='' disabled selected hidden>Choose a Type</option>"
 
         for(const model of modelTypeCombos) {
             if(model.make_id == makeId) {
@@ -72,22 +62,5 @@
             }
         }
     });
-
-    document.getElementById("model").addEventListener("change", (event) => {
-        const modelId = event.target.value;
-
-        const vehicleTypeInput = document.getElementById("vehicle-type");
-        vehicleTypeInput.disabled = false;
-        vehicleTypeInput.innerHTML = "<option value='' disabled selected hidden>Choose a Type</option>"
-
-        for(const model of modelTypeCombos) {
-            if(model.model_id == modelId) {
-                const newOption = document.createElement("option")
-                newOption.innerText = model.vehicle_type_name
-                vehicleTypeInput.append(newOption)
-            }
-        }
-    });
-
 </script>
 </html>

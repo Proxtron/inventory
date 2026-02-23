@@ -31,3 +31,19 @@ export interface ModelTypeCombo {
     vehicle_type_id: number,
     make_id: number
 }
+
+export interface CreateVehiclePostBody {
+    year: string,
+    color: string,
+    price: string,
+    make: string,
+    model: string,
+}
+
+export interface AddVehicleParams {
+    year: number,
+    color: string,
+    price: number,
+    make: number,
+    model: number,
+}
