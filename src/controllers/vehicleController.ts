@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { validationResult } from "express-validator";
-import { getVehicle, getAllVehiclesByType, addVehicle } from "../db/vehicle.js";
+import { getVehicle, getAllVehiclesByType, addVehicle, deleteVehicle } from "../db/vehicle.js";
 import { getAllMakes } from "../db/make.js";
 import { getAllModelTypeCombos } from "../db/model.js";
 import type { CreateVehiclePostBody } from "../types.js";
@@ -71,4 +71,20 @@ export const postCreateForm = async (
     } catch(err) {
         return res.status(500).send("An error occured when trying to add your vehicle. Please try again");
     }
+}
+
+export const postDeleteForm = async (req: Request<{}, {}, {vehicle_id: string}>, res: Response) => {
+    const result = validationResult(req);
+    if(!result.isEmpty()) {
+        return res.status(400).send("Bad request");
+    }
+
+    const vehicle_id = parseInt(req.body.vehicle_id);
+    try {
+        await deleteVehicle(vehicle_id);
+        return res.redirect("/")
+    } catch (err) {
+        return res.status(500).send("An error occured when trying to delete your vehicle. Please try again");
+    }
+    
 }

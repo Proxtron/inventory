@@ -22,4 +22,9 @@ vehicleRouter.post("/new",
     vehicleController.postCreateForm
 )
 
+vehicleRouter.post("/delete",
+    body("vehicle_id").isInt(),
+    vehicleController.postDeleteForm
+)
+
 export default vehicleRouter;

@@ -17,5 +17,9 @@
     <p><b>Year:</b> <%= vehicle.year %></p>
     <p><b>Make:</b> <a href="/make/<%- vehicle.make_id %>"><%= vehicle.make_name %></a></p>
     <p><b>Model:</b> <%= vehicle.model_name %></p>
+    <form action="/vehicle/delete" method="POST">
+        <input type="number" name="vehicle_id" value="<%- vehicle.vehicle_id %>" hidden>
+        <button type="submit">Delete Vehicle</button>
+    </form>
 </body>
 </html>

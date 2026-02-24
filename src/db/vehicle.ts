@@ -106,3 +106,10 @@ export const addVehicle = async ({year, color, price, make, model}: AddVehiclePa
     `, [year, color, price, model])
     return rows[0];
 }
+
+export const deleteVehicle = async (vehicleId: number) => {
+    await pool.query(`
+        DELETE FROM vehicle
+        WHERE id = $1
+    `, [vehicleId]);
+}
