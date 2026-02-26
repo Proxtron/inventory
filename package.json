@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx --watch --env-file=.env src/app.ts"
+    "dev": "tsx --watch --env-file=.env src/app.ts",
+    "build": "tsc && copyfiles -u 1 \"src/views/**/*\" \"src/public/**/*\" dist",
+    "clean": "rm -rf dist",
+    "start": "node ./dist/app.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +27,7 @@
     "@types/express-validator": "^2.20.33",
     "@types/node": "^25.2.3",
     "@types/pg": "^8.16.0",
+    "copyfiles": "^2.4.1",
     "dotenv": "^17.2.4",
     "typescript": "^5.9.3"
   },
