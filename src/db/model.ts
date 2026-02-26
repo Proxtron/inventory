@@ -1,5 +1,5 @@
 import pool from "./pool.js";
-import type { Model, ModelTypeCombo } from "../types.js";
+import type { CreateModelParams, Model, ModelTypeCombo } from "../types.js";
 
 export const getAllModels = async () => {
     const { rows } = await pool.query<Model>(`
@@ -36,3 +36,9 @@ export const getAllModelTypeCombos = async () => {
     return rows;
 }
 
+export const addModel = async ({model, make, vehicle_type}: CreateModelParams) => {
+    const queryResult = await pool.query(`
+        INSERT INTO model (model_name, vehicle_type_id, make_id)
+        VALUES ($1, $2, $3)
+    `, [model, vehicle_type, make]);
+}

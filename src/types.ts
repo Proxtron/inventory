@@ -47,3 +47,20 @@ export interface AddVehicleParams {
     make: number,
     model: number,
 }
+
+export interface VehicleType {
+    vehicle_type_id: number,
+    vehicle_type_name: string
+}
+
+export interface CreateModelPostBody {
+    model: string,
+    make: string, 
+    vehicle_type: string
+}
+
+export interface CreateModelParams {
+    model: string,
+    make: number,
+    vehicle_type: number
+}
