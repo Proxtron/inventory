@@ -21,7 +21,7 @@
     "url": "https://github.com/Proxtron/inventory/issues"
   },
   "homepage": "https://github.com/Proxtron/inventory#readme",
-  "devDependencies": {
+  "dependencies": {
     "@types/ejs": "^3.1.5",
     "@types/express": "^5.0.6",
     "@types/express-validator": "^2.20.33",
@@ -29,13 +29,11 @@
     "@types/pg": "^8.16.0",
     "copyfiles": "^2.4.1",
     "dotenv": "^17.3.1",
-    "typescript": "^5.9.3"
-  },
-  "dependencies": {
     "ejs": "^4.0.1",
     "express": "^5.2.1",
     "express-validator": "^7.3.1",
     "pg": "^8.18.0",
-    "tsx": "^4.21.0"
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   }
 }
