@@ -21,5 +21,5 @@ CREATE TABLE vehicle (
     year INT NOT NULL,
     color VARCHAR(20) NOT NULL,
     price MONEY NOT NULL,
-    model_id INTEGER NOT NULL REFERENCES model(id)
+    model_id INTEGER NOT NULL REFERENCES model(id) ON DELETE CASCADE
 );

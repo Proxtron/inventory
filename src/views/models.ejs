@@ -30,6 +30,11 @@
                         <td><%= model.make_name %></td>
                         <td><%= model.vehicle_type_name %></td>
                         <td><%= model.vehicle_count %></td>
+                        <td>
+                            <form action="/model/delete/<%- model.id %>" method="POST">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 <% } %>
             </tbody>

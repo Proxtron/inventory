@@ -42,3 +42,7 @@ export const addModel = async ({model, make, vehicle_type}: CreateModelParams) =
         VALUES ($1, $2, $3)
     `, [model, vehicle_type, make]);
 }
+
+export const deleteModel = async (modelId: number) => {
+    pool.query("DELETE FROM model where id = $1", [modelId])
+}

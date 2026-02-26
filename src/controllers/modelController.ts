@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { addModel, getAllModels } from "../db/model.js";
+import { addModel, getAllModels, deleteModel } from "../db/model.js";
 import { getAllMakes } from "../db/make.js";
 import { getAllVehicleTypes } from "../db/vehicle.js";
 import { validationResult } from "express-validator";
@@ -36,4 +36,21 @@ export const postCreateModel = async (req: Request<{}, {}, CreateModelPostBody>,
             return res.status(500).send("An error occured when creating your model. Please contact us for help")
         }
     }
+}
+
+export const postDeleteModel = async (req: Request<{model_id: string}>, res: Response) => {
+    const validation = validationResult(req);
+    if(!validation.isEmpty()) {
+        return res.status(400).send("Bad request");
+    }
+
+    const modelId = parseInt(req.params.model_id);
+    try {
+        await deleteModel(modelId);
+        return res.redirect("/model")
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send("An error occured when trying to delete your model. Please try again");
+    }
+
 }
